@@ -7,9 +7,10 @@ namespace EbchesterApi.Models
 {
     public class PlayerMatch
     {
+        public int PlayerId { get; set; }
         public int Appearance { get; set; }
         public int Goals { get; set; }
         public int Assists { get; set; }
-        public int MoM { get; set; }
+        public int Mom { get; set; }
     }
 }

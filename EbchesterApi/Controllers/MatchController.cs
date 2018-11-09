@@ -40,7 +40,7 @@ namespace EbchesterApi.Controllers
         [HttpGet("fixtures")]
         public async Task<IActionResult> GetFixtures()
         {
-            return Ok(await _matchservice.GetResults());
+            return Ok(await _matchservice.GetFixtures());
         }
     }
 
