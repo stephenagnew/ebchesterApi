@@ -33,12 +33,14 @@ namespace EbchesterApi.Repositories
         {
             return await _matchCollection
                 .Find(x => x.Date < DateTime.Now)
+                .SortByDescending(e => e.Date)
                 .ToListAsync();
         }
         public async Task<List<Match>> GetFixtures()
         {
             return await _matchCollection
                 .Find(x => x.Date >= DateTime.Now)
+                .SortByDescending(e => e.Date)
                 .ToListAsync();
         }
     }
