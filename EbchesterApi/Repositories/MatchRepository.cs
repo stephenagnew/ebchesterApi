@@ -40,7 +40,7 @@ namespace EbchesterApi.Repositories
         {
             return await _matchCollection
                 .Find(x => x.Date >= DateTime.Now)
-                .SortByDescending(e => e.Date)
+                .SortBy(e => e.Date)
                 .ToListAsync();
         }
     }
