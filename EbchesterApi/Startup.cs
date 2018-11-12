@@ -36,11 +36,13 @@ namespace EbchesterApi
             services.AddSingleton(sp => new MongoClient(Configuration.GetSection("MongoConnection:ConnectionString").Value));
             services.AddSingleton(sp => sp.GetService<MongoClient>().GetDatabase(Configuration.GetSection("MongoConnection:Database").Value));
             services.AddSingleton(sp => sp.GetService<IMongoDatabase>().GetCollection<Match>("Matches"));
-            //services.AddSingleton(sp => sp.GetService<IMongoDatabase>().GetCollection<Player>("Players"));
+            services.AddSingleton(sp => sp.GetService<IMongoDatabase>().GetCollection<Player>("Players"));
 
             //DI services setup
             services.AddTransient<IMatchService, MatchService>();
             services.AddTransient<IMatchRepository, MatchRepository>();
+            services.AddTransient<IPlayerService, PlayerService>();
+            services.AddTransient<IPlayerRepository, PlayerRepository>();
 
             //Cors
             services.AddCors(options => options.AddPolicy("AllowAll", p => p.AllowAnyOrigin()
