@@ -31,6 +31,8 @@ namespace EbchesterApi.Controllers
             return Ok(await _matchservice.AddMatchDetails(match));
         }
 
+        //Put to update match 
+
         [HttpGet("results")]
         public async Task<IActionResult> GetResults()
         {

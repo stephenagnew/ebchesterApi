@@ -8,6 +8,7 @@ namespace EbchesterApi.Repositories.Interfaces
 {
     public interface IPlayerRepository
     {
+        Task<Player> GetPlayerById(Player player);
        Task<List<Player>> GetPlayers();
         Task<Player> AddPlayer(Player player);
         Task<bool> UpdatePlayer(Player player);
