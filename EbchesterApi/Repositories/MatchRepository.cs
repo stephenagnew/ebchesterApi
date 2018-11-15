@@ -29,6 +29,17 @@ namespace EbchesterApi.Repositories
             return match;
         }
 
+        public async Task<bool> UpdateMatchDetails(Match match)
+        {
+            Match matchToUpdate = await GetMatchById(match.MatchId);
+            match._id = matchToUpdate._id;
+
+            var result = await _matchCollection
+                .ReplaceOneAsync(x => x.MatchId == match.MatchId, match);
+
+            return result.IsAcknowledged && result.ModifiedCount > 0;
+        }
+
         public async Task<List<Match>> GetResults()
         {
             return await _matchCollection

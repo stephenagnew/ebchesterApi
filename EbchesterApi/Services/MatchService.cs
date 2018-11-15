@@ -27,7 +27,6 @@ namespace EbchesterApi.Services
         {
             var addedMatch = await _matchRepository.AddMatchDetails(match);
 
-            //Update Player Stats here with info from match report
             foreach (var playerMatch in addedMatch.PlayerMatchStats)
             {
                 _playerRespository.UpdatePlayer(playerMatch);
@@ -40,6 +39,41 @@ namespace EbchesterApi.Services
             };
         }
 
+        public async Task<ResponseMessage> UpdateMatchDetails(Match match)
+        {
+            var updatedMatch = await _matchRepository.UpdateMatchDetails(match);
+
+            if (updatedMatch)
+            {
+                if(match.PlayerMatchStats.Count > 0)
+                {
+                    foreach (var playerMatch in match.PlayerMatchStats)
+                    {
+                        _playerRespository.UpdatePlayer(playerMatch);
+                    }
+
+                    return new ResponseMessage
+                    {
+                        Message = "Match Updated",
+                        Body = match
+                    };
+                }
+            }
+            else
+            {
+                return new ResponseMessage
+                {
+                    Message = "No Matches have been modified"
+                };
+            }
+           
+
+            return new ResponseMessage
+            {
+                Message = "Match Updated Successfully",
+                Body = updatedMatch
+            };
+        }
         public async Task<List<Match>> GetResults()
         {
             return await _matchRepository.GetResults();

@@ -25,6 +25,12 @@ namespace EbchesterApi.Controllers
             return Ok(await _playerService.GetPlayers());
         }
 
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetPlayers(int playerId)
+        {
+            return Ok(await _playerService.GetPlayerById(playerId));
+        }
+
         [HttpPost]
         public async Task<IActionResult> AddPlayer([FromBody] Player player)
         {

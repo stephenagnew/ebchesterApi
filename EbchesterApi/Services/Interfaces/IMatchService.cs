@@ -10,6 +10,7 @@ namespace EbchesterApi.Services.Interfaces
     {
         Task<Match> GetMatchById(int id);
         Task<ResponseMessage> AddMatchDetails(Match match);
+        Task<ResponseMessage> UpdateMatchDetails(Match match);
         Task<List<Match>> GetResults();
         Task<List<Match>> GetFixtures();
     }

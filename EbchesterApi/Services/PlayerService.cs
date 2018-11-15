@@ -21,6 +21,11 @@ namespace EbchesterApi.Services
             return await _playerRepository.GetPlayers();
         }
 
+        public async Task<Player> GetPlayerById(int playerId)
+        {
+            return await _playerRepository.GetPlayerById(playerId);
+        }
+
         public async Task<ResponseMessage> AddPlayer(Player player)
         {
             var addedPlayer = await _playerRepository.AddPlayer(player);

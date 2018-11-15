@@ -16,10 +16,10 @@ namespace EbchesterApi.Repositories
             _playerCollection = playerCollection;
         }
 
-        public async Task<Player> GetPlayerById(Player player)
+        public async Task<Player> GetPlayerById(int playerId)
         {
             return await _playerCollection
-                .Find(x => x.PlayerId == player.PlayerId)
+                .Find(x => x.PlayerId == playerId)
                 .FirstOrDefaultAsync();
         }
 
@@ -38,7 +38,7 @@ namespace EbchesterApi.Repositories
 
         public async Task<bool> UpdatePlayer(Player player)
         {
-            Player playerToUpdate = await GetPlayerById(player);
+            Player playerToUpdate = await GetPlayerById(player.PlayerId);
             player._id = playerToUpdate._id;
 
             var result = await _playerCollection
