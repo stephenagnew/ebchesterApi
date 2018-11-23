@@ -8,6 +8,7 @@ using EbchesterApi.Repositories;
 using EbchesterApi.Repositories.Interfaces;
 using EbchesterApi.Services;
 using EbchesterApi.Services.Interfaces;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -50,7 +51,19 @@ namespace EbchesterApi
               .AllowAnyHeader()
               .AllowCredentials()));
 
-            //Add Authentication
+            //Authentication
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options =>
+                {
+                    options.Authority = $"https://ebchester.b2clogin.com/{Configuration["AzureB2C:Tenant"]}/{Configuration["AzureB2C:Policy"]}/v2.0/";
+                    options.Audience = Configuration["AzureB2C:ClientId"];
+                });
+
+            //Authority
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("ComitteeMan", policy => policy.RequireClaim("extension_Role", "Admin"));
+            });
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
@@ -71,6 +84,7 @@ namespace EbchesterApi
             app.UseMiddleware(typeof(GlobalErrorHandler));
             app.UseCors("AllowAll");
             app.UseHttpsRedirection();
+            app.UseAuthentication();
             app.UseMvc();
         }
     }
